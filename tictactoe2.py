@@ -56,7 +56,7 @@ def player_generator():
     return player_one, player_two
 
 
-def chk_winning_conditions(player_names):
+def chk_winning_conditions(player_one_name, player_two_name):
     i = 0
     while i < 3:        
         if board[0+3*i] == board[1+3*i] and board[1+3*i] == board[2+3*i]:
@@ -133,7 +133,7 @@ def game_body_case_players(player_names):
             reserve_list.append(move)
         i += 1
         print_board(board)
-        is_game_ended = chk_winning_conditions(player_names)
+        is_game_ended = chk_winning_conditions(player_one_name, player_two_name)
 
 
 def ai_random_choose():
@@ -168,7 +168,7 @@ def game_body_case_comp(player_names):
             print("comp reserve list", reserve_list)
         i += 1
         print_board(board)
-        is_game_ended = chk_winning_conditions()
+        is_game_ended = chk_winning_conditions(player_one_name, player_two_name)
 
 
 def choose_enemy():    
