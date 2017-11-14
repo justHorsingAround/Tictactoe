@@ -1,4 +1,5 @@
 import sys
+import test_client
 from random import randint
 from timeit import default_timer
 
@@ -183,9 +184,12 @@ def choose_enemy():
             print("\033[1;31mWrong input, try again!\033[0;0m\n")
 
 
+
+
 new_game = True
 computer_plays = False
 while new_game:
+    
     start = default_timer()
     who_is_second_player = choose_enemy()
     player_one_name, player_two_name = player_names()
