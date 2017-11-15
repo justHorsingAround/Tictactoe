@@ -18,13 +18,13 @@ def ip_address():
                 print("Error, not a valid ip address, "
                       "please try again or press 'esc' to exit!")
     else:
-        return ". . ."   
-    
+        return ". . ."  
 
 
 def server_echo():
     s.sendall('echo')
     date = s.recv(1024) 
+
 
 def socket_scaffold():
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -38,14 +38,15 @@ new_game = True
 computer_plays = False
 while new_game:   
     start = default_timer()
-    who_is_second_player = tictactoe2.choose_enemy()
-    player_one_name, player_two_name = tictactoe2.player_names()
+    who_is_second_player = tictactoe2.choose_enemy()    
     player_one_mark, player_two_mark = tictactoe2.player_generator()
     board = list("123456789")
     reserve_list = []
 
     if who_is_second_player == 0:
-        print("\nPlayer one is: ", player_one_name)
+        player_one_name = tictactoe2.player_names()
+        player_two_name = tictactoe2.player_names()
+        print("\nPlayer one is: ", player_one_name)        
         print("Player two is: ", player_two_name)
         tictactoe2.print_board(board)
         tictactoe2.game_body_case_players(player_one_name, player_two_name,
@@ -56,9 +57,11 @@ while new_game:
         #tictactoe2.print_best_score()        
         new_game = tictactoe2.start_new_game()
 
-    elif who_is_second_player == 1:        
+    elif who_is_second_player == 1:
+        player_one_name = tictactoe2.player_names()        
         print("\nPlayer one is: ", player_one_name)
-        print("\nComputer is: ", player_two_name)
+        player_two_name = "Computer"
+        print("\nPlayer two is: ", player_two_name)
         tictactoe2.print_board(board)
         tictactoe2.game_body_case_comp(player_one_name, player_two_name,
                                        reserve_list, board, player_one_mark,
@@ -67,4 +70,9 @@ while new_game:
         tictactoe2.fancy_score()
         #tictactoe2.print_best_score()         
         new_game = tictactoe2.start_new_game()
+
+    elif who_is_second_player == 2:
+        player_one_name = tictactoe2.player_names() 
+        
+        pass
             

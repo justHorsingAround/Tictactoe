@@ -5,9 +5,8 @@ from timeit import default_timer
 
 
 def player_names():
-    player_one = str(input('Enter the first players name: '))
-    player_two = str(input('Enter the second players name: '))
-    return player_one, player_two
+    return input('Enter the first players name: ')    
+  
 
 
 def start_new_game():
