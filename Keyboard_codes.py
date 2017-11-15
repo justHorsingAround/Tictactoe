@@ -1,4 +1,4 @@
-
+import sys
 import curses
 
 main_menu = '''---PLAY GAME---
@@ -29,12 +29,12 @@ try:
             stdscr.move((y-1) % 3, x)
             counter -= 1
         
-        if counter == 0 and c == curses.KEY_ENTER or c == 10 or c == 13:
+        if counter == 0 and (c == curses.KEY_ENTER or c == 10 or c == 13):
             print('First')
-        elif counter == 1 and c == curses.KEY_ENTER or c == 10 or c == 13:
+        elif counter == 1 and (c == curses.KEY_ENTER or c == 10 or c == 13):
             print('Second option')
-        elif counter == 2 and c == curses.KEY_ENTER or c == 10 or c == 13:
-            exit(0)
+        elif counter == 2 and (c == curses.KEY_ENTER or c == 10 or c == 13):
+            sys.exit(0)
             
         stdscr.refresh()
 
