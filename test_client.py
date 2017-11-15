@@ -18,7 +18,7 @@ def ip_address():
                 print("Error, not a valid ip address, "
                       "please try again or press 'esc' to exit!")
     else:
-        return "192.168.0.220"  
+        return "192.168.0.171"  
 
 
 def server_echo(s):
@@ -42,9 +42,9 @@ def socket_scaffold():
         print("Server is started on", host, "port:", port)
         return s    
 
-def send_names(s, player_one_name):
-    player_one_name = player_one_name.encode('utf-8')
-    s.send(player_one_name)
+def send_names(s, player_name):
+    player_name = player_name.encode('utf-8')
+    s.send(player_name)
     date = s.recv(1024)
     print(repr(date.decode('utf-8')))
 
