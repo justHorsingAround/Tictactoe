@@ -7,7 +7,7 @@ from timeit import default_timer
 
 
 def ip_address():  
-    ip_hardcoded = True   #hardcoded to avoid timewasting while testing
+    ip_hardcoded = False   #hardcoded to avoid timewasting while testing
     if ip_hardcoded is not True: 
         while True:
             ip_input = input("Please enter the server ip: ")
@@ -20,7 +20,7 @@ def ip_address():
                 print("Error, not a valid ip address, "
                       "please try again or press 'esc' to exit!")
     else:
-        return "192.168.150.191"   #my address in the school
+        return " . . . ."   
     
 
 
