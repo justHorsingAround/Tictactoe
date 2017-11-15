@@ -1,8 +1,6 @@
 import socket
 import sys
-import csv
 import tictactoe2
-from random import randint
 from timeit import default_timer
 
 
@@ -40,14 +38,13 @@ new_game = True
 computer_plays = False
 while new_game:   
     start = default_timer()
-    tictactoe2.who_is_second_player = tictactoe2.choose_enemy()
+    who_is_second_player = tictactoe2.choose_enemy()
     player_one_name, player_two_name = tictactoe2.player_names()
     player_one_mark, player_two_mark = tictactoe2.player_generator()
     board = list("123456789")
     reserve_list = []
-       
 
-    if tictactoe2.who_is_second_player == 0:
+    if who_is_second_player == 0:
         print("\nPlayer one is: ", player_one_name)
         print("Player two is: ", player_two_name)
         tictactoe2.print_board(board)
@@ -59,7 +56,7 @@ while new_game:
         #tictactoe2.print_best_score()        
         new_game = tictactoe2.start_new_game()
 
-    elif tictactoe2.who_is_second_player == 1:        
+    elif who_is_second_player == 1:        
         print("\nPlayer one is: ", player_one_name)
         print("\nComputer is: ", player_two_name)
         tictactoe2.print_board(board)
