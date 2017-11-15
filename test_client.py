@@ -20,7 +20,7 @@ def ip_address():
                 print("Error, not a valid ip address, "
                       "please try again or press 'esc' to exit!")
     else:
-        return " . . . ."   
+        return ". . ."   
     
 
 
@@ -38,34 +38,25 @@ def socket_scaffold():
 
 new_game = True
 computer_plays = False
-while new_game:
-   
+while new_game:   
     start = default_timer()
     tictactoe2.who_is_second_player = tictactoe2.choose_enemy()
     player_one_name, player_two_name = tictactoe2.player_names()
     player_one_mark, player_two_mark = tictactoe2.player_generator()
     board = list("123456789")
     reserve_list = []
-    
-    
+       
 
     if tictactoe2.who_is_second_player == 0:
         print("\nPlayer one is: ", player_one_name)
-        print("Player two is: ", player_two_name)     
+        print("Player two is: ", player_two_name)
         tictactoe2.print_board(board)
         tictactoe2.game_body_case_players(player_one_name, player_two_name,
                                           reserve_list, board, player_one_mark,
                                           player_two_mark)
-        duration = default_timer() - start
-        duration = int(duration)
-        
-        print('You played' ,duration, 'sec','\n')
-        print('×××××××××××××××××××××××')
-        print('××××× \033[1;31mTOP PLAYERS\033[0;0m ×××××')
-        print('×××××××××××××××××××××××')  
-        '''with open ('tictactoe_scores.txt', 'r') as f:
-            player_scores = f.readlines()
-            print(player_scores)'''
+        tictactoe2.timer(start)
+        tictactoe2.fancy_score()
+        #tictactoe2.print_best_score()        
         new_game = tictactoe2.start_new_game()
 
     elif tictactoe2.who_is_second_player == 1:        
@@ -75,17 +66,8 @@ while new_game:
         tictactoe2.game_body_case_comp(player_one_name, player_two_name,
                                        reserve_list, board, player_one_mark,
                                        player_two_mark)
-        duration = default_timer() - start
-        duration = int(duration)
-        
-        print('You played' ,duration, 'sec','\n')
-        print('×××××××××××××××××××××××')
-        print('××××× \033[1;31mTOP PLAYERS\033[0;0m ×××××')
-        print('×××××××××××××××××××××××') 
-        '''with open ('tictactoe_scores.csv', 'r') as rf:
-            score_name = csv.reader(rf)
-            temp_list = list(score_name)
-            for item in range(len(temp_list[0])):
-                print(temp_list[0][item])'''
+        tictactoe2.timer(start)
+        tictactoe2.fancy_score()
+        #tictactoe2.print_best_score()         
         new_game = tictactoe2.start_new_game()
             

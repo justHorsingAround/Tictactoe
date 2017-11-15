@@ -1,6 +1,7 @@
 import sys
 import csv
 from random import randint
+from timeit import default_timer
 
 
 def player_names():
@@ -192,8 +193,23 @@ def choose_enemy():
         except ValueError:
             print("\033[1;31mWrong input, try again!\033[0;0m\n")
 
-def print_playerid_turn():
+
+def fancy_score():
+    print('×××××××××××××××××××××××')
+    print('××××× \033[1;31mTOP PLAYERS\033[0;0m ×××××')
+    print('×××××××××××××××××××××××')  
+
+def timer(start):
+    duration = default_timer() - start
+    duration = int(duration)    
+    print('You played' ,duration, 'sec','\n')
+
+def print_best_score():
+    '''with open ('tictactoe_scores.txt', 'r') as f:
+            player_scores = f.readlines()
+            print(player_scores)'''
     pass
+
     
     
     
