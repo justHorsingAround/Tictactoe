@@ -58,7 +58,11 @@ while new_game:
                                           player_two_mark)
         duration = default_timer() - start
         duration = int(duration)
-        print('You played' ,duration, 'sec') 
+        
+        print('You played' ,duration, 'sec','\n')
+        print('×××××××××××××××××××××××')
+        print('××××× \033[1;31mTOP PLAYERS\033[0;0m ×××××')
+        print('×××××××××××××××××××××××')  
         '''with open ('tictactoe_scores.txt', 'r') as f:
             player_scores = f.readlines()
             print(player_scores)'''
@@ -73,7 +77,11 @@ while new_game:
                                        player_two_mark)
         duration = default_timer() - start
         duration = int(duration)
-        print('You played' ,duration, 'sec')
+        
+        print('You played' ,duration, 'sec','\n')
+        print('×××××××××××××××××××××××')
+        print('××××× \033[1;31mTOP PLAYERS\033[0;0m ×××××')
+        print('×××××××××××××××××××××××') 
         '''with open ('tictactoe_scores.csv', 'r') as rf:
             score_name = csv.reader(rf)
             temp_list = list(score_name)

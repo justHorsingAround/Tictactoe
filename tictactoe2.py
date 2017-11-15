@@ -1,7 +1,6 @@
 import sys
-import test_client
+import csv
 from random import randint
-from timeit import default_timer
 
 
 def player_names():
@@ -56,62 +55,66 @@ def player_generator():
         player_two = '\033[1;31mX\033[0;0m'
     return player_one, player_two
 
+def write_score_file(player_name):
+    with open("tictactoe_scores.csv", "a") as wf:        
+        writer_obj = csv.writer(wf)
+        writer_obj.writerow(player_name)
 
-def chk_winning_conditions(player_one_name, player_two_name):
+def chk_winning_conditions(player_one_name, player_two_name, reserve_list,
+                           board, player_one_mark, player_two_mark):
     i = 0
     while i < 3:        
         if board[0+3*i] == board[1+3*i] and board[1+3*i] == board[2+3*i]:
             if board[1+3*i] == player_one_mark:
                 print(player_one_name, "is the winner!")
-                with open ('tictactoe_scores.txt', 'a') as f:
-                    f.write(player_one_name + '\n')
+                write_score_file(player_one_name)
             else:
                 print(player_two_name, "is the winner! ")
-                with open ('tictactoe_scores.txt', 'a') as f:
-                    f.write(player_two_name + '\n')
+                write_score_file(player_two_name)
             return True      
-        i += 1        
+        i += 1 
+
     j = 0
     while j < 3:
         if board[0+j] == board[3+j] and board[3+j] == board[6+j]:
             if board[3+j] == player_one_mark:
                 print(player_one_name, "is the winner!")
-                with open ('tictactoe_scores.txt', 'a') as f:
-                    f.write(player_one_name + '\n')
+                write_score_file(player_one_name)
             else:
                 print(player_two_name, "is the winner! ")
-                with open ('tictactoe_scores.txt', 'a') as f:
-                    f.write(player_two_name + '\n')
+                write_score_file(player_two_name)
             return True
-        j += 1            
+        j += 1  
+
     if board[0] == board[4] and board[4] == board[8]:
         if board[4] == player_one_mark:
             print(player_one_name, "is the winner!")
-            with open ('tictactoe_scores.txt', 'a') as f:
-                f.write(player_one_name + '\n')
+            write_score_file(player_one_name)
         else:
             print(player_two_name, "is the winner! ")
-            with open ('tictactoe_scores.txt', 'a') as f:
-                f.write(player_two_name + '\n')
-        return True        
+            write_score_file(player_two_name)
+        return True
+
     elif board[2] == board[4] and board[4] == board[6]:
         if board[4] == player_one_mark:
             print(player_one_name, "is the winner!")
-            with open ('tictactoe_scores.txt', 'a') as f:
-                f.write(player_one_name + '\n')
+            write_score_file(player_one_name)
         else:
             print(player_two_name, "is the winner! ")
-            with open ('tictactoe_scores.txt', 'a') as f:
-                f.write(player_two_name + '\n')
+            write_score_file(player_two_name)
         return True
+
     elif len(reserve_list) == 9:
         print('This is a draw!')
-        return True    
+        return True
+
     else:
         return False
 
 
-def game_body_case_players(player_names):     
+def game_body_case_players(player_one_name, player_two_name, 
+                           reserve_list, board, player_one_mark,
+                           player_two_mark):     
     i = 1
     is_game_ended = False
     move = 0
@@ -134,10 +137,12 @@ def game_body_case_players(player_names):
             reserve_list.append(move)
         i += 1
         print_board(board)
-        is_game_ended = chk_winning_conditions(player_one_name, player_two_name)
+        is_game_ended = chk_winning_conditions(player_one_name, player_two_name,
+                                               reserve_list, board, player_one_mark,
+                                               player_two_mark)
 
 
-def ai_random_choose():
+def ai_random_choose(reserve_list):
     running = True
     while running:
         temp = randint(0, 8)
@@ -147,7 +152,9 @@ def ai_random_choose():
             return temp
 
 
-def game_body_case_comp(player_names):
+def game_body_case_comp(player_one_name, player_two_name,
+                        reserve_list, board, player_one_mark,
+                        player_two_mark):
     i = 1
     is_game_ended = False
     move = 0
@@ -163,13 +170,15 @@ def game_body_case_comp(player_names):
             print("user reserve list", reserve_list)
         if (i % 2) == 0:
             print("Player computers turn")
-            move = ai_random_choose()
+            move = ai_random_choose(reserve_list)
             board[move] = player_two_mark
             reserve_list.append(move)
             print("comp reserve list", reserve_list)
         i += 1
         print_board(board)
-        is_game_ended = chk_winning_conditions(player_one_name, player_two_name)
+        is_game_ended = chk_winning_conditions(player_one_name, player_two_name,
+                                               reserve_list, board, player_one_mark,
+                                               player_two_mark)
 
 
 def choose_enemy():    
@@ -183,43 +192,12 @@ def choose_enemy():
         except ValueError:
             print("\033[1;31mWrong input, try again!\033[0;0m\n")
 
-
-
-
-new_game = True
-computer_plays = False
-while new_game:
+def print_playerid_turn():
+    pass
     
-    start = default_timer()
-    who_is_second_player = choose_enemy()
-    player_one_name, player_two_name = player_names()
-    player_one_mark, player_two_mark = player_generator()
-    board = list("123456789")
-    reserve_list = []
+    
+    
 
-    if who_is_second_player == 0:
-        print("\nPlayer one is: ", player_one_name)
-        print("Player two is: ", player_two_name)     
-        print_board(board)
-        game_body_case_players(player_names)
-        duration = default_timer() - start
-        duration = int(duration)
-        print('You played' ,duration, 'sec') 
-        with open ('tictactoe_scores.txt', 'r') as f:
-            player_scores = f.readlines()
-            print(player_scores)
-        new_game = start_new_game()
 
-    elif who_is_second_player == 1:        
-        print("\nPlayer one is: ", player_one_name)
-        print("\nComputer is: ", player_two_name)
-        print_board(board)
-        game_body_case_comp(player_names)
-        duration = default_timer() - start
-        duration = int(duration)
-        print('You played' ,duration, 'sec')
-        with open ('tictactoe_scores.txt', 'r') as f:
-            player_scores = f.readlines()
-            print(player_scores)
-        new_game = start_new_game()
-        
+
+
