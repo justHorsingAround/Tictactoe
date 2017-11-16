@@ -17,13 +17,13 @@ def send_list_to_first(s, list_data):
     data_dict = json.dumps(json_obj)
     decoded_data = data_dict.encode('utf-8')
     first_connection.sendall(decoded_data)
+   
+
+def send_list_to_second(s, list_data):
     json_obj = {'datalist': list_data}
     data_dict = json.dumps(json_obj)
     decoded_data = data_dict.encode('utf-8')
     sec_connection.sendall(decoded_data)
-
-def send_list_to_second(s, list_data):
-    pass
     
 '''def send_list_to_second(s, list_data):
     json_obj = {'datalist': list_data}
@@ -69,14 +69,15 @@ name_two = sec_connection.recv(1024)
 first_connection.sendall(name_two)
 sec_connection.sendall(name_one)
 
-#player_one_mark, player_two_mark = player_generator()
-#first_connection.sendall(player_one_mark)
-#sec_connection.sendall(player_two_mark)
+player_one_mark, player_two_mark = player_generator()
+first_connection.sendall(player_one_mark)
+sec_connection.sendall(player_two_mark)
 
 
 send_list_to_first(s, board)
-
+send_list_to_second(s, board)
 send_list_to_first(s, reserve_list)
+send_list_to_second(s, reserve_list)
 
 
 

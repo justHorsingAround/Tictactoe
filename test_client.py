@@ -115,8 +115,8 @@ while new_game:
         s = socket_scaffold()
         player_one_name = tictactoe2.player_names()        
         player_two_name = exchange_names(s, player_one_name)
-        #player_mark = get_mark(s)
-        #debug_print("playermark", player_mark)
+        player_mark = get_mark(s)
+        print("playermark", player_mark)
        
 
         print("\nPlayer one is: ", player_one_name)        
