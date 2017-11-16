@@ -111,6 +111,24 @@ def chk_winning_conditions(player_one_name, player_two_name, reserve_list,
     else:
         return False
 
+def game_body_case_net(player_one_name, player_two_name, net_reserve_list, net_board, player_one_mark,
+                       player_two_mark): 
+    is_game_ended = False
+    move = 0
+    
+    print(player_one_name,'s turn')
+    move = cooridante_input()
+    while move in net_reserve_list:
+        print("\n\033[1;31mThis field is already taken!\033[0;0m")
+        move = cooridante_input()
+    net_board[move] = player_one_mark
+    net_reserve_list.append(move)
+    is_game_ended = chk_winning_conditions(player_one_name, player_two_name,
+                                        net_reserve_list, net_board, player_one_mark,
+                                        player_two_mark)
+        
+        
+
 
 def game_body_case_players(player_one_name, player_two_name, 
                            reserve_list, board, player_one_mark,
