@@ -12,6 +12,16 @@ def accept_connection(s):
     print("Received a connection from", address[0], ":", port)
     return connection, address
 
+def send_list(s, list_data):
+    json_obj = {'datalist': list_data}
+    data_dict = json.dumps(json_obj)
+    decoded_data = data_dict.encode('utf-8')
+    first_connection.sendall(decoded_data)
+    # repeated to second send
+    json_obj = {'datalist': list_data}
+    data_dict = json.dumps(json_obj)
+    decoded_data = data_dict.encode('utf-8')
+    sec_connection.sendall(decoded_data)
 
     
     
@@ -37,14 +47,8 @@ name_two = sec_connection.recv(1024)
 first_connection.sendall(name_two)
 sec_connection.sendall(name_one)
 
-json_obj = {'board': board}
-
-
-b_board = json.dumps(json_obj)
-dec_board = b_board.encode('utf-8')
-first_connection.sendall(dec_board)
-sec_connection.sendall(dec_board)
-
+send_list(s, board)
+send_list(s, reserve_list)
 
 
 debug_print("Server is up to shotdown")

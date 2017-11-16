@@ -19,7 +19,12 @@ def ip_address():
                 print("Error, not a valid ip address, "
                       "please try again or press 'esc' to exit!")
     else:
-        return "192.168.0.171"  
+        return "192.168.150.191"  
+
+
+def debug_print(message, data):
+    if DEBUG_PRINT == True:
+        print(message, data)
 
 
 def server_echo(s):
@@ -44,18 +49,23 @@ def exchange_names(s, player_name):
     return second_player_name.decode('utf-8')
     #print(repr(date.decode('utf-8')))
 
-def get_board(s):
+def get_list(s):
     
-    board_dic_data = s.recv(4096)
-    print('board dic', board_dic_data)
-    board_decoded = board_dic_data.decode('utf-8')
-    print('board decoded', board_decoded)
-    board = json.loads(board_decoded)
-    print('board', board)
+    net_dic_data = s.recv(4096)
+    debug_print('net dictest', net_dic_data)  #debugprint 
 
-    pass    #continue from here; todo: dict to list
-    #return board
+    net_decoded = net_dic_data.decode('utf-8')
+    debug_print('net decoded', net_decoded)  #debugprint
 
+    net = json.loads(net_decoded)
+    debug_print('net', net)  #debugprint
+
+    local_net = net['datalist']
+    debug_print('local net to return', local_net)  #debugprint
+
+    return local_net
+
+DEBUG_PRINT = True 
 
 new_game = True
 computer_plays = False
@@ -103,7 +113,10 @@ while new_game:
         player_two_name = exchange_names(s, player_one_name) 
         print("\nPlayer one is: ", player_one_name)        
         print("\nPlayer two is: ", player_two_name)
-        board = get_board(s)
-        print(board)        
+        net_board = get_list(s)
+        debug_print("netboard in main", net_board)  #debugprint
+        tictactoe2.print_board(net_board)
+        net_reserv_list = get_list(s)  
+        debug_print("net reserve list", net_reserv_list)  #debugprint
         pass
             
