@@ -123,10 +123,10 @@ while new_game:
         print("\nPlayer two is: ", player_two_name)
 
         net_board = get_list(s)
-        debug_print("netboard in main", net_board)  #debugprint
-        tictactoe2.print_board(board)  #inital board from client file
+        #debug_print("netboard in main", net_board)  #debugprint
+        tictactoe2.print_board(net_board)  #inital board from client file
         net_reserv_list = get_list(s)  
-        debug_print("net reserve list", net_reserv_list)  #debugprint
+        print(net_reserv_list)
         
         pass
             

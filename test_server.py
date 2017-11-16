@@ -16,20 +16,16 @@ def send_list_to_first(s, list_data):
     json_obj = {'datalist': list_data}
     data_dict = json.dumps(json_obj)
     decoded_data = data_dict.encode('utf-8')
-    first_connection.sendall(decoded_data)
+    first_connection.sendall(decoded_data) 
+    print("decoded data from fisr send", decoded_data)   
    
 
 def send_list_to_second(s, list_data):
+    print("second send list", list_data)
     json_obj = {'datalist': list_data}
     data_dict = json.dumps(json_obj)
     decoded_data = data_dict.encode('utf-8')
     sec_connection.sendall(decoded_data)
-    
-'''def send_list_to_second(s, list_data):
-    json_obj = {'datalist': list_data}
-    data_dict = json.dumps(json_obj)
-    decoded_data = data_dict.encode('utf-8')
-    sec_connection.sendall(decoded_data)'''
 
 def player_generator():
     temp = randint(0, 1)
@@ -53,7 +49,7 @@ MAX_TURNS = 9
 
 debug_print("Server is running.")
 
-board = list("123456789")
+board = list("123456780")
 reserve_list = ["0"]
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -75,9 +71,13 @@ sec_connection.sendall(player_two_mark)
 
 
 send_list_to_first(s, board)
+print(board)
 send_list_to_second(s, board)
+
 send_list_to_first(s, reserve_list)
+print(reserve_list)
 send_list_to_second(s, reserve_list)
+
 
 
 
