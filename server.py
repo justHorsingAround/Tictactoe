@@ -99,7 +99,7 @@ while turn_counter <= MAX_TURNS:
     elif turn_counter % 2 == 0:
         print('board in else', board)        
         send_list_to_second(s, board, reserve_list, name_one, player_two_mark, turn_counter)
-    board, reserve_list = recieve_data(sec_connection)
+        board, reserve_list = recieve_data(sec_connection)
     print('after recieve', board, reserve_list)
 
     turn_counter =+ 1
