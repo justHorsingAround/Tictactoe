@@ -45,13 +45,9 @@ def socket_scaffold():
 def exchange_names(s, player_name):
     player_name = player_name.encode('utf-8')
     s.send(player_name)
-    second_player_name = s.recv(1024)
-    return second_player_name.decode('utf-8')
+    
     #print(repr(date.decode('utf-8')))
 
-def get_mark(s):
-    player_mark = s.recv(1024)
-    return player_mark.decode('utf-8')
 
 
 
@@ -59,7 +55,8 @@ def get_list(s):
     net_dic_data = s.recv(4096)
     debug_print('net dictest', net_dic_data)  #debugprint 
 
-    if len(net_dic_data) == 0: 
+    while len(net_dic_data) == 0:
+        print("RECIEVED 0") 
         net_dic_data = s.recv(4096)
 
     net_decoded = net_dic_data.decode('utf-8')
@@ -68,12 +65,18 @@ def get_list(s):
     net = json.loads(net_decoded)
     debug_print('net', net)  #debugprint
 
-    local_net = net['datalist']
+    local_net = net['board']
     debug_print('local net to return', local_net)  #debugprint
 
-    return local_net
+    net_reserve_list = net['reserve'] 
+    debug_print('reserve list: ', net_reserve_list)
 
-DEBUG_PRINT = True
+    net_other_player_name = net['name']
+    net_other_mark = net['mark']
+
+    return local_net, net_reserve_list, net_other_player_name, net_other_mark
+
+DEBUG_PRINT=False
 
 new_game = True
 computer_plays = False
@@ -84,6 +87,8 @@ while new_game:
 
     board = list("123456789")
     reserve_list = []
+    net_board = []
+    net_reserve_list = []
     
 
     if who_is_second_player == 0:        
@@ -116,19 +121,28 @@ while new_game:
 
     elif who_is_second_player == 2:
         s = socket_scaffold()
-        player_one_name = tictactoe2.player_names()        
-        player_two_name = exchange_names(s, player_one_name)
-        player_mark = get_mark(s)
-        print("playermark", player_mark)
-       
-
-        print("\nPlayer one is: ", player_one_name)        
+        player_one_name = tictactoe2.player_names()
+        exchange_names(s, player_one_name) 
+        net_board, net_reserve_list, player_two_name, player_one_mark = get_list(s)
+        print("\nPlayer one is: ", player_one_name)
+        print("Player's mark is:", player_one_mark)
+        player_two_mark = ''
+        if player_one_mark == '\033[1;31mX\033[0;0m':
+            player_two_mark = '\033[1;32mo\033[0;0m'
+        else:
+            player_two_mark = '\033[1;31mX\033[0;0m'
+                    
         print("\nPlayer two is: ", player_two_name)
-
-        net_board = get_list(s)
-        #debug_print("netboard in main", net_board)  #debugprint
+        print("Player's mark is:", player_two_mark)
+               
+        
+        
+        debug_print("netboard in main", net_board)  #debugprint
         tictactoe2.print_board(net_board)  #inital board from client file
-        net_reserv_list = get_list(s)  
+        tictactoe2.game_body_case_comp(player_one_name, player_two_name,
+                                       net_reserve_list, net_board, player_one_mark,
+                                       player_two_mark)
+          
         print(net_reserv_list)
         
         pass
