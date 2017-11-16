@@ -49,8 +49,13 @@ def exchange_names(s, player_name):
     return second_player_name.decode('utf-8')
     #print(repr(date.decode('utf-8')))
 
-def get_list(s):
-    
+def get_mark(s):
+    player_mark = s.recv(1024)
+    return player_mark.decode('utf-8')
+
+
+
+def get_list(s):    
     net_dic_data = s.recv(4096)
     debug_print('net dictest', net_dic_data)  #debugprint 
 
@@ -65,7 +70,7 @@ def get_list(s):
 
     return local_net
 
-DEBUG_PRINT = True 
+DEBUG_PRINT = True
 
 new_game = True
 computer_plays = False
@@ -73,11 +78,12 @@ while new_game:
     start = default_timer()
     who_is_second_player = tictactoe2.choose_enemy()    
     player_one_mark, player_two_mark = tictactoe2.player_generator()
+
+    board = list("123456789")
+    reserve_list = []
     
 
-    if who_is_second_player == 0:
-        board = list("123456789")
-        reserve_list = []
+    if who_is_second_player == 0:        
         player_one_name = tictactoe2.player_names()
         player_two_name = tictactoe2.player_names()
         print("\nPlayer one is: ", player_one_name)        
@@ -92,8 +98,6 @@ while new_game:
         new_game = tictactoe2.start_new_game()
 
     elif who_is_second_player == 1:
-        board = list("123456789")
-        reserve_list = []
         player_one_name = tictactoe2.player_names()
         player_two_name = "Computer"        
         print("\nPlayer one is: ", player_one_name)        
@@ -110,13 +114,19 @@ while new_game:
     elif who_is_second_player == 2:
         s = socket_scaffold()
         player_one_name = tictactoe2.player_names()        
-        player_two_name = exchange_names(s, player_one_name) 
+        player_two_name = exchange_names(s, player_one_name)
+        #player_mark = get_mark(s)
+        #debug_print("playermark", player_mark)
+       
+
         print("\nPlayer one is: ", player_one_name)        
         print("\nPlayer two is: ", player_two_name)
+
         net_board = get_list(s)
         debug_print("netboard in main", net_board)  #debugprint
-        tictactoe2.print_board(net_board)
+        tictactoe2.print_board(board)  #inital board from client file
         net_reserv_list = get_list(s)  
         debug_print("net reserve list", net_reserv_list)  #debugprint
+        
         pass
             
