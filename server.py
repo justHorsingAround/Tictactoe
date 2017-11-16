@@ -36,10 +36,11 @@ def send_list_to_second(s, board, reserve, name_one, mark_two, round_numb):
 def recieve_data(s):
     recv_dict_data = s.recv(4096)
     serv_decoded = recv_dict_data.decode('utf-8')
-    loaded_data = json.loads(net_decoded)
+    loaded_data = json.loads(serv_decoded)
     player_board = loaded_data['board']
-    reserve = loaded_date['reserv'] 
-    return board, reserve
+    print('board in recivedata()', player_board)
+    reserve = loaded_data['reserve'] 
+    return player_board, reserve
 
 
 def player_generator():
@@ -88,24 +89,20 @@ player_one_mark, player_two_mark = player_generator()
 
 print("Sending board...")
 
+
 while turn_counter <= MAX_TURNS:
     print(board)
     if turn_counter % 2 == 1:
         send_list_to_first(s, board, reserve_list, name_two, player_one_mark, turn_counter)
-        s.close()
+        board, reserve_list = recieve_data(first_connection)
+        print('after recieve', board, reserve_list)
     elif turn_counter % 2 == 0:
-        print('board in else', board)
+        print('board in else', board)        
         send_list_to_second(s, board, reserve_list, name_one, player_two_mark, turn_counter)
-    board, reserve_list = recieve_data(s)
+    board, reserve_list = recieve_data(sec_connection)
     print('after recieve', board, reserve_list)
 
-    turn_counter += 1
-
-
-
-
-
-
+    turn_counter =+ 1
     
 
 

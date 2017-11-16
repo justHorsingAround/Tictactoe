@@ -49,7 +49,7 @@ def exchange_names(s, player_name):
     #print(repr(date.decode('utf-8')))
 
 def send_data_to_server(s, net_board, net_reserve_list):
-    json_obj = {'board': net_board, 'reserv': net_reserve_list}
+    json_obj = {'board': net_board, 'reserve': net_reserve_list}
     data_dict = json.dumps(json_obj)
     encoded_data = data_dict.encode('utf-8')
     s.sendall(encoded_data)
@@ -59,7 +59,7 @@ def get_list(s):
     net_dic_data = s.recv(4096)
     debug_print('net dictest', net_dic_data)  #debugprint 
 
-    while len(net_dic_data) == 0:
+    if len(net_dic_data) == 0:
         print("RECIEVED 0") 
         net_dic_data = s.recv(4096)
 
@@ -143,10 +143,10 @@ while new_game:
         
         
         debug_print("netboard in main", net_board)  #debugprint
-        tictactoe2.print_board(net_board)  #inital board from client file
+        tictactoe2.print_board(net_board)  
         tictactoe2.game_body_case_net(player_one_name, player_two_name,
-                                       net_reserve_list, net_board, player_one_mark,
-                                       player_two_mark)
+                                      net_reserve_list, net_board, player_one_mark,
+                                      player_two_mark)
         send_data_to_server(s, net_board, net_reserve_list)
 
         print('net board after step', net_board)
