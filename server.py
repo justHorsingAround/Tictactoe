@@ -12,24 +12,35 @@ def accept_connection(s):
     print("Received a connection from", address[0], ":", port)
     return connection, address
 
-def send_list_to_first(s, board, reserve, name_two, mark_one):    
+def send_list_to_first(s, board, reserve, name_two, mark_one, round_numb):    
     print("first send list", board)
     json_obj = {'board': board, 'reserve': reserve,
-                'name': name_two, 'mark': mark_one}
+                'name': name_two, 'mark': mark_one,
+                'round': round_numb}
     data_dict = json.dumps(json_obj)
     decoded_data = data_dict.encode('utf-8')
     first_connection.sendall(decoded_data) 
     print("decoded data from first send", decoded_data)   
    
 
-def send_list_to_second(s, board, reserve, name_one, mark_two):
+def send_list_to_second(s, board, reserve, name_one, mark_two, round_numb):
     print("second send list", board)
     json_obj = {'board': board, 'reserve': reserve,
-                'name': name_one, 'mark': mark_two}
+                'name': name_one, 'mark': mark_two,
+                'round': round_numb}
     data_dict = json.dumps(json_obj)
     decoded_data = data_dict.encode('utf-8')
     sec_connection.sendall(decoded_data)
     print("decoded data from second send", decoded_data)   
+
+def recieve_data(s):
+    recv_dict_data = s.recv(4096)
+    serv_decoded = recv_dict_data.decode('utf-8')
+    loaded_data = json.loads(net_decoded)
+    player_board = loaded_data['board']
+    reserve = loaded_date['reserv'] 
+    return board, reserve
+
 
 def player_generator():
     temp = randint(0, 1)
@@ -51,8 +62,8 @@ MAX_TURNS = 9
 
 debug_print("Server is running.")
 
-board = list("123456780")
-reserve_list = ["0"]
+board = list("123456789")
+reserve_list = [-1]
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -77,11 +88,18 @@ player_one_mark, player_two_mark = player_generator()
 
 print("Sending board...")
 
-#while counter <= MAX_TURNS:
-print(board)
-send_list_to_first(s, board, reserve_list, name_two, player_one_mark)
-print(board)
-send_list_to_second(s, board, reserve_list, name_one, player_two_mark)
+while turn_counter <= MAX_TURNS:
+    print(board)
+    if turn_counter % 2 == 1:
+        send_list_to_first(s, board, reserve_list, name_two, player_one_mark, turn_counter)
+        s.close()
+    elif turn_counter % 2 == 0:
+        print('board in else', board)
+        send_list_to_second(s, board, reserve_list, name_one, player_two_mark, turn_counter)
+    board, reserve_list = recieve_data(s)
+    print('after recieve', board, reserve_list)
+
+    turn_counter += 1
 
 
 

@@ -48,7 +48,11 @@ def exchange_names(s, player_name):
     
     #print(repr(date.decode('utf-8')))
 
-
+def send_data_to_server(s, net_board, net_reserve_list):
+    json_obj = {'board': net_board, 'reserv': net_reserve_list}
+    data_dict = json.dumps(json_obj)
+    encoded_data = data_dict.encode('utf-8')
+    s.sendall(encoded_data)
 
 
 def get_list(s):    
@@ -73,8 +77,9 @@ def get_list(s):
 
     net_other_player_name = net['name']
     net_other_mark = net['mark']
+    round_number = net['round']
 
-    return local_net, net_reserve_list, net_other_player_name, net_other_mark
+    return local_net, net_reserve_list, net_other_player_name, net_other_mark, round_number
 
 DEBUG_PRINT=False
 
@@ -123,7 +128,7 @@ while new_game:
         s = socket_scaffold()
         player_one_name = tictactoe2.player_names()
         exchange_names(s, player_one_name) 
-        net_board, net_reserve_list, player_two_name, player_one_mark = get_list(s)
+        net_board, net_reserve_list, player_two_name, player_one_mark, round_numb = get_list(s)
         print("\nPlayer one is: ", player_one_name)
         print("Player's mark is:", player_one_mark)
         player_two_mark = ''
@@ -139,11 +144,15 @@ while new_game:
         
         debug_print("netboard in main", net_board)  #debugprint
         tictactoe2.print_board(net_board)  #inital board from client file
-        tictactoe2.game_body_case_comp(player_one_name, player_two_name,
+        tictactoe2.game_body_case_net(player_one_name, player_two_name,
                                        net_reserve_list, net_board, player_one_mark,
                                        player_two_mark)
+        send_data_to_server(s, net_board, net_reserve_list)
+
+        print('net board after step', net_board)
+        print('round number', round_numb)                               
           
-        print(net_reserv_list)
+        print(' net reserve list after move', net_reserve_list)
         
         pass
             
