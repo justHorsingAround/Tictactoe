@@ -102,7 +102,7 @@ while turn_counter <= MAX_TURNS:
         board, reserve_list = recieve_data(sec_connection)
     print('after recieve', board, reserve_list)
 
-    turn_counter =+ 1
+    turn_counter += 1
     
 
 

@@ -67,12 +67,12 @@ def chk_winning_conditions(player_names, reserve_list, player_generator, board, 
         if board[0+3*i] == board[1+3*i] and board[1+3*i] == board[2+3*i]:
             if board[1+3*i] == player_one_mark:
                 print(player_one_name, "is the winner!")
-                with open ('tictactoe_scores.txt', 'a') as f:
-                    f.write(player_one_name)
+                '''with open ('tictactoe_scores.txt', 'a') as f:
+                    f.write(player_one_name)'''
             else:
                 print(player_two_name, "is the winner! ")
-                with open ('tictactoe_scores.txt', 'a') as f:
-                    f.write(player_two_name)
+                '''with open ('tictactoe_scores.txt', 'a') as f:
+                    f.write(player_two_name)'''
             return True      
         i += 1 
 
@@ -81,35 +81,35 @@ def chk_winning_conditions(player_names, reserve_list, player_generator, board, 
         if board[0+j] == board[3+j] and board[3+j] == board[6+j]:
             if board[3+j] == player_one_mark:
                 print(player_one_name, "is the winner!")
-                with open ('tictactoe_scores.txt', 'a') as f:
-                    f.write(player_one_name)
+                #with open ('tictactoe_scores.txt', 'a') as f:
+                #    f.write(player_one_name)
             else:
                 print(player_two_name, "is the winner! ")
-                with open ('tictactoe_scores.txt', 'a') as f:
-                    f.write(player_two_name)
+                #with open ('tictactoe_scores.txt', 'a') as f:
+                #   f.write(player_two_name)
             return True
         j += 1  
 
     if board[0] == board[4] and board[4] == board[8]:
         if board[4] == player_one_mark:
             print(player_one_name, "is the winner!")
-            with open ('tictactoe_scores.txt', 'a') as f:
-                f.write(player_one_name)
+            #with open ('tictactoe_scores.txt', 'a') as f:
+            #    f.write(player_one_name)
         else:
             print(player_two_name, "is the winner! ")
-            with open ('tictactoe_scores.txt', 'a') as f:
-                f.write(player_two_name)
+            #with open ('tictactoe_scores.txt', 'a') as f:
+            #   f.write(player_two_name)
         return True
 
     elif board[2] == board[4] and board[4] == board[6]:
         if board[4] == player_one_mark:
             print(player_one_name, "is the winner!")
-            with open ('tictactoe_scores.txt', 'a') as f:
-                f.write(player_one_name)
+            #with open ('tictactoe_scores.txt', 'a') as f:
+            #   f.write(player_one_name)
         else:
             print(player_two_name, "is the winner! ")
-            with open ('tictactoe_scores.txt', 'a') as f:
-                f.write(player_two_name)
+            #with open ('tictactoe_scores.txt', 'a') as f:
+            #   f.write(player_two_name)
         return True
 
     elif len(reserve_list) == 9:
