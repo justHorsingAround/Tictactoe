@@ -78,6 +78,9 @@ name_two = sec_connection.recv(1024)
 name_two = name_two.decode('utf-8')
 player_one_mark, player_two_mark = player_generator()
 
+send_list_to_first(s, board, reserve_list, name_two, player_one_mark, turn_counter)
+send_list_to_second(s, board, reserve_list, name_one, player_two_mark, turn_counter)
+
 while turn_counter <= MAX_TURNS:
     print(board)
     if turn_counter % 2 == 1:
