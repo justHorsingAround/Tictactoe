@@ -202,7 +202,7 @@ def choose_enemy():
     while True:
         try:
             who_is_second_player = int(input("\n\033[1;33mPress 0 if you want to play with someone,"
-                                             "or 1 if to choose the computer: \033[0;0m"))
+                                             "or 1 if to choose the computer or 2 for network: \033[0;0m"))
             if who_is_second_player == 0 or who_is_second_player == 1 or who_is_second_player == 2:
                return who_is_second_player
             else:

@@ -132,11 +132,12 @@ while new_game:
         print("\nPlayer two is: ", player_two_name)
         print("Player's mark is:", player_two_mark)
 
-        # debug_print("netboard in main", net_board)  #debugprint
+        # while round_numb <= 9:
+            # debug_print("netboard in main", net_board)  #debugprint
         tictactoe2.print_board(net_board)  
         tictactoe2.game_body_case_net(player_one_name, player_two_name,
-                                      net_reserve_list, net_board, player_one_mark,
-                                      player_two_mark)
+                                    net_reserve_list, net_board, player_one_mark,
+                                    player_two_mark)
         send_data_to_server(s, net_board, net_reserve_list)
 
         # print('net board after step', net_board)
