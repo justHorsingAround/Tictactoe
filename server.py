@@ -97,7 +97,7 @@ while turn_counter <= MAX_TURNS and run_gmae is True:
         send_list_to_second(s, board, reserve_list, name_one, player_two_mark, turn_counter)
         board, reserve_list, is_game_ended = recieve_data(sec_connection)
         if is_game_ended is True:
-            run_gmae = False
+            run_game = False
     print('after recieve', board, reserve_list)
 
     turn_counter += 1
