@@ -6,7 +6,6 @@ from timeit import default_timer
 
 def player_names():
     return input('Enter the first players name: ')    
-  
 
 
 def start_new_game():
@@ -15,7 +14,6 @@ def start_new_game():
         return True
     else:
         print("\033[1;31mThe game has been terminated by the user!\033[0;0m")
-
         return False
 
     
@@ -55,10 +53,12 @@ def player_generator():
         player_two = '\033[1;31mX\033[0;0m'
     return player_one, player_two
 
+
 def write_score_file(player_name):
     with open("tictactoe_scores.csv", "a") as wf:        
         writer_obj = csv.writer(wf)
         writer_obj.writerow(player_name)
+
 
 def chk_winning_conditions(player_one_name, player_two_name, reserve_list,
                            board, player_one_mark, player_two_mark):
@@ -111,12 +111,13 @@ def chk_winning_conditions(player_one_name, player_two_name, reserve_list,
     else:
         return False
 
+
 def game_body_case_net(player_one_name, player_two_name, net_reserve_list, net_board, player_one_mark,
                        player_two_mark): 
     is_game_ended = False
     move = 0
     
-    print(player_one_name,'s turn')
+    print(player_one_name, 's turn')
     move = cooridante_input()
     while move in net_reserve_list:
         print("\n\033[1;31mThis field is already taken!\033[0;0m")
@@ -124,12 +125,10 @@ def game_body_case_net(player_one_name, player_two_name, net_reserve_list, net_b
     net_board[move] = player_one_mark
     net_reserve_list.append(move)
     is_game_ended = chk_winning_conditions(player_one_name, player_two_name,
-                                        net_reserve_list, net_board, player_one_mark,
-                                        player_two_mark)
+                                           net_reserve_list, net_board, player_one_mark,
+                                           player_two_mark)
         
         
-
-
 def game_body_case_players(player_one_name, player_two_name, 
                            reserve_list, board, player_one_mark,
                            player_two_mark):     
@@ -138,7 +137,7 @@ def game_body_case_players(player_one_name, player_two_name,
     move = 0
     while not is_game_ended:             
         if (i % 2) == 1:
-            print(player_one_name,'s turn')
+            print(player_one_name, 's turn')
             move = cooridante_input()           
             while move in reserve_list:
                 print("\n\033[1;31mThis field is already taken!\033[0;0m")
@@ -146,7 +145,7 @@ def game_body_case_players(player_one_name, player_two_name,
             board[move] = player_one_mark
             reserve_list.append(move)          
         elif (i % 2) == 0:
-            print(player_two_name,'s turn')
+            print(player_two_name, 's turn')
             move = cooridante_input()
             while move in reserve_list:
                 print("\n\033[1;31mThis field is already taken!\033[0;0m")
@@ -178,7 +177,7 @@ def game_body_case_comp(player_one_name, player_two_name,
     move = 0
     while not is_game_ended:
         if (i % 2) == 1:
-            print(player_one_name,'s turn')
+            print(player_one_name, 's turn')
             move = cooridante_input()           
             while move in reserve_list:
                 print("\n\033[1;31mThis field is already taken!\033[0;0m")
@@ -202,7 +201,8 @@ def game_body_case_comp(player_one_name, player_two_name,
 def choose_enemy():    
     while True:
         try:
-            who_is_second_player = int(input("\n\033[1;33mPress 0 if you want to play with someone, or 1 if to choose the computer: \033[0;0m"))
+            who_is_second_player = int(input("\n\033[1;33mPress 0 if you want to play with someone,"
+                                             "or 1 if to choose the computer: \033[0;0m"))
             if who_is_second_player == 0 or who_is_second_player == 1 or who_is_second_player == 2:
                return who_is_second_player
             else:
@@ -216,10 +216,12 @@ def fancy_score():
     print('××××× \033[1;31mTOP PLAYERS\033[0;0m ×××××')
     print('×××××××××××××××××××××××')  
 
+
 def timer(start):
     duration = default_timer() - start
     duration = int(duration)    
-    print('You played' ,duration, 'sec','\n')
+    print('You played', duration, 'sec','\n')
+
 
 def print_best_score():
     '''with open ('tictactoe_scores.txt', 'r') as f:
