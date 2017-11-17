@@ -1,6 +1,7 @@
 import socket
 import time
 import json
+import os
 from random import randint
 
 
@@ -82,7 +83,8 @@ player_one_mark, player_two_mark = player_generator()
 send_list_to_first(s, board, reserve_list, name_two, player_one_mark, turn_counter)
 send_list_to_second(s, board, reserve_list, name_one, player_two_mark, turn_counter)
 
-while turn_counter <= MAX_TURNS:
+run_gmae = True
+while turn_counter <= MAX_TURNS and run_gmae is True:
     print(board)
     if turn_counter % 2 == 1:
         send_list_to_first(s, board, reserve_list, name_two, player_one_mark, turn_counter)
@@ -95,10 +97,11 @@ while turn_counter <= MAX_TURNS:
         send_list_to_second(s, board, reserve_list, name_one, player_two_mark, turn_counter)
         board, reserve_list, is_game_ended = recieve_data(sec_connection)
         if is_game_ended is True:
-            break
+            run_gmae = False
     print('after recieve', board, reserve_list)
 
     turn_counter += 1
 
 print("Server is up to shotdown")
 s.close()
+

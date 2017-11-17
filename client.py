@@ -61,8 +61,9 @@ def get_list(s):
     debug_print('net dictest', net_dic_data)  # debugprint 
 
     if len(net_dic_data) == 0:
-        print("RECIEVED 0") 
-        net_dic_data = s.recv(4096)
+        print("RECIEVED 0")
+        sys.exit(0) 
+        # net_dic_data = s.recv(4096)
 
     net_decoded = net_dic_data.decode('utf-8')
     debug_print('net decoded: ', '"{}"'.format(net_decoded))  # debugprint
@@ -133,8 +134,8 @@ while new_game:
         print("\nPlayer two is: ", player_two_name)
         print("Player's mark is:", player_two_mark)
 
-        
-        while round_numb <= 9:
+        run_game = True
+        while round_numb <= 9 and run_game is True:
             # debug_print("netboard in main", net_board)  #debugprint
             net_board, net_reserve_list, player_two_name, player_one_mark, round_numb = get_list(s)
             tictactoe2.print_board(net_board)  
@@ -142,11 +143,16 @@ while new_game:
                                         net_reserve_list, net_board, player_one_mark,
                                         player_two_mark)
             if is_game_ended is True:
+                run_game = False
                 print("The game has been ended")
-                break
+                
+                
             send_data_to_server(s, net_board, net_reserve_list, is_game_ended)
+
+        # The closing not implemented yet!
 
         # print('net board after step', net_board)
         # print('round number', round_numb)                                 
         # print(' net reserve list after move', net_reserve_list)
+        
 
