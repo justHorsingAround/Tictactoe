@@ -44,7 +44,8 @@ def recieve_data(s):
     player_board = loaded_data['board']
     print('board in recivedata()', player_board)
     reserve = loaded_data['reserve'] 
-    return player_board, reserve
+    game_ended = loaded_data['end']
+    return player_board, reserve, game_ended
 
 
 def player_generator():
@@ -85,12 +86,16 @@ while turn_counter <= MAX_TURNS:
     print(board)
     if turn_counter % 2 == 1:
         send_list_to_first(s, board, reserve_list, name_two, player_one_mark, turn_counter)
-        board, reserve_list = recieve_data(first_connection)
+        board, reserve_list, is_game_ended = recieve_data(first_connection)
         print('after recieve', board, reserve_list)
+        if is_game_ended is True:
+            break
     elif turn_counter % 2 == 0:
         print('board in else', board)        
         send_list_to_second(s, board, reserve_list, name_one, player_two_mark, turn_counter)
-        board, reserve_list = recieve_data(sec_connection)
+        board, reserve_list, is_game_ended = recieve_data(sec_connection)
+        if is_game_ended is True:
+            break
     print('after recieve', board, reserve_list)
 
     turn_counter += 1

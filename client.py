@@ -48,8 +48,9 @@ def exchange_names(s, player_name):
     s.send(player_name)    
 
 
-def send_data_to_server(s, net_board, net_reserve_list):
-    json_obj = {'board': net_board, 'reserve': net_reserve_list}
+def send_data_to_server(s, net_board, net_reserve_list, is_game_ended):
+    json_obj = {'board': net_board, 'reserve': net_reserve_list,
+                'end': is_game_ended}
     data_dict = json.dumps(json_obj)
     encoded_data = data_dict.encode('utf-8')
     s.sendall(encoded_data)
@@ -137,10 +138,13 @@ while new_game:
             # debug_print("netboard in main", net_board)  #debugprint
             net_board, net_reserve_list, player_two_name, player_one_mark, round_numb = get_list(s)
             tictactoe2.print_board(net_board)  
-            tictactoe2.game_body_case_net(player_one_name, player_two_name,
+            is_game_ended = tictactoe2.game_body_case_net(player_one_name, player_two_name,
                                         net_reserve_list, net_board, player_one_mark,
                                         player_two_mark)
-            send_data_to_server(s, net_board, net_reserve_list)
+            if is_game_ended is True:
+                print("The game has been ended")
+                break
+            send_data_to_server(s, net_board, net_reserve_list, is_game_ended)
 
         # print('net board after step', net_board)
         # print('round number', round_numb)                                 
